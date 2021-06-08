@@ -197,6 +197,8 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     const nextNotification = this.callStack.shift();
     if (nextNotification) {
       this.showNotification(nextNotification);
+    } else {
+      this.setState({...this.state, Component: NotificationComponent})
     }
   }
 
