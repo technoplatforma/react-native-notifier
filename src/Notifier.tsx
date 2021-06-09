@@ -24,6 +24,8 @@ export const Notifier: NotifierInterface = {
   showNotification: () => {},
   hideNotification: () => {},
   clearQueue: () => {},
+  clearNotificationById: () => {},
+  hideNotificationById: () => {},
 };
 
 export class NotifierRoot extends React.PureComponent<ShowNotificationParams, StateInterface> {

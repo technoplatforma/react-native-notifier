@@ -106,4 +106,6 @@ export interface NotifierInterface {
   ): void;
   hideNotification(onHidden?: Animated.EndCallback): void;
   clearQueue(hideDisplayedNotification?: boolean): void;
+  clearNotificationById(id: string, hideDisplayedNotification: boolean): void;
+  hideNotificationById(id: string, callback?: Animated.EndCallback): void;
 }
