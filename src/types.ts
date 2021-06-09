@@ -64,6 +64,8 @@ export type QueueMode = 'immediate' | 'next' | 'standby' | 'reset';
 
 export interface ShowNotificationParams<ComponentType extends ElementType = ElementType>
   extends ShowParams {
+  id?: string;
+
   /** Title of notification. __Passed to `Component`.__
    * @default null */
   title?: string;
@@ -90,6 +92,7 @@ export interface ShowNotificationParams<ComponentType extends ElementType = Elem
 }
 
 export interface StateInterface {
+  id?: string;
   title?: string;
   description?: string;
   swipeEnabled: boolean;

@@ -84,6 +84,19 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     clearTimeout(this.hideTimer);
   }
 
+  /** Hide notification and remove it from queue if [hideDisplayedNotification] is true */
+  public clearNotificationById(id: string, hideDisplayedNotification: boolean = true) {
+    this.callStack = this.callStack.filter(params => params.id !== id);
+    if (hideDisplayedNotification) this.hideNotificationById(id);
+  }
+
+  /** Hide notification but don't remove it from queue */
+  public hideNotificationById(id: string, callback?: Animated.EndCallback) {
+    if (this.isShown && !this.isHiding && this.state.id === id) {
+      this.hideNotification(callback);
+    }
+  }
+
   public hideNotification(callback?: Animated.EndCallback) {
     if (!this.isShown || this.isHiding) {
       return;
@@ -138,9 +151,18 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
       return;
     }
 
-    const { title, description, swipeEnabled, Component, componentProps, ...restParams } = params;
+    const {
+      id,
+      title,
+      description,
+      swipeEnabled,
+      Component,
+      componentProps,
+      ...restParams
+    } = params;
 
     this.setState({
+      id,
       title,
       description,
       Component: Component ?? NotificationComponent,
@@ -198,7 +220,7 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     if (nextNotification) {
       this.showNotification(nextNotification);
     } else {
-      this.setState({...this.state, Component: NotificationComponent})
+      this.setState({ ...this.state, id: undefined, Component: NotificationComponent });
     }
   }
 
