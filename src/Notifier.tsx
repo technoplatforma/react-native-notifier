@@ -76,10 +76,14 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     this.showNotification = this.showNotification.bind(this);
     this.hideNotification = this.hideNotification.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
+    this.hideNotificationById = this.hideNotificationById.bind(this);
+    this.clearNotificationById = this.clearNotificationById.bind(this);
 
     Notifier.showNotification = this.showNotification;
     Notifier.hideNotification = this.hideNotification;
     Notifier.clearQueue = this.clearQueue;
+    Notifier.hideNotificationById = this.hideNotificationById;
+    Notifier.clearNotificationById = this.clearNotificationById;
   }
 
   componentWillUnmount() {
