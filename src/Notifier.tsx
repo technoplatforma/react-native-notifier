@@ -1,24 +1,24 @@
 import React from 'react';
-import { Animated, View, TouchableWithoutFeedback, LayoutChangeEvent } from 'react-native';
+import { Animated, LayoutChangeEvent, TouchableWithoutFeedback } from 'react-native';
 import {
   PanGestureHandler,
-  State,
   PanGestureHandlerStateChangeEvent,
+  State,
 } from 'react-native-gesture-handler';
 
 import s from './Notifier.styles';
 import { Notification as NotificationComponent } from './components';
 import {
   DEFAULT_ANIMATION_DURATION,
+  DEFAULT_COMPONENT_HEIGHT,
   DEFAULT_DURATION,
+  DEFAULT_SWIPE_ENABLED,
   MAX_TRANSLATE_Y,
   MIN_TRANSLATE_Y,
   SWIPE_ANIMATION_DURATION,
   SWIPE_PIXELS_TO_CLOSE,
-  DEFAULT_SWIPE_ENABLED,
-  DEFAULT_COMPONENT_HEIGHT,
 } from './constants';
-import { ShowParams, ShowNotificationParams, StateInterface, NotifierInterface } from './types';
+import { NotifierInterface, ShowNotificationParams, ShowParams, StateInterface } from './types';
 
 export const Notifier: NotifierInterface = {
   showNotification: () => {},
@@ -283,14 +283,13 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
           style={[
             s.container,
             {
+              height: -this.hiddenComponentValue,
               transform: [{ translateY: this.translateYInterpolated }],
             },
           ]}
         >
-          <TouchableWithoutFeedback onPress={this.onPress}>
-            <View onLayout={this.onLayout}>
-              <Component title={title} description={description} {...componentProps} />
-            </View>
+          <TouchableWithoutFeedback onPress={this.onPress} onLayout={this.onLayout}>
+            <Component title={title} description={description} {...componentProps} />
           </TouchableWithoutFeedback>
         </Animated.View>
       </PanGestureHandler>
