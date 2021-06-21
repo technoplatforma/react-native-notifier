@@ -60,11 +60,27 @@ export interface ShowParams {
   duration?: number;
 }
 
-export type QueueMode = 'immediate' | 'immediateMove' | 'next' | 'standby' | 'reset';
+export type QueueMode =
+  | 'immediate'
+  | 'immediateMove'
+  | 'immediateMoveOnlyStrong'
+  | 'next'
+  | 'standby'
+  | 'reset';
 
 export interface ShowNotificationParams<ComponentType extends ElementType = ElementType>
   extends ShowParams {
+  /** Id of notification. To have control of the toasts.
+   * @default undefined */
   id?: string;
+
+  /** It won't hide current toast if a toast with same id is already shown
+   * @default false */
+  skipAlreadyShown?: boolean;
+
+  /** If true, next toast with a queueMode 'immediateMoveOnlyStrong' will show it toast later (if it shown)
+   * @default false */
+  strong?: boolean;
 
   /** Title of notification. __Passed to `Component`.__
    * @default null */

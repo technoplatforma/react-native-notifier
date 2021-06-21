@@ -126,9 +126,11 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     this.onStartHiding();
   }
 
-  private showCurrentLater() {
+  private showCurrentLater(moveOnlyStrong: boolean) {
     if (!this.isShown || this.isHiding || this.currentParams === null) return;
-    this.callStack.unshift(this.currentParams);
+    if (!moveOnlyStrong || this.currentParams.strong === true) {
+      this.callStack.unshift(this.currentParams);
+    }
   }
 
   public showNotification<ComponentType extends React.ElementType = typeof NotificationComponent>(
@@ -139,6 +141,15 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
       ...functionParams,
       componentProps: { ...this.props?.componentProps, ...functionParams?.componentProps },
     };
+
+    if (
+      params.skipAlreadyShown &&
+      this.isShown &&
+      !this.isHiding &&
+      params.id &&
+      this.state.id === params.id
+    )
+      return;
 
     if (this.isShown) {
       switch (params.queueMode) {
@@ -156,7 +167,13 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
           break;
         }
         case 'immediateMove': {
-          this.showCurrentLater();
+          this.showCurrentLater(false);
+          this.callStack.unshift(params);
+          this.hideNotification();
+          break;
+        }
+        case 'immediateMoveOnlyStrong': {
+          this.showCurrentLater(true);
           this.callStack.unshift(params);
           this.hideNotification();
           break;
