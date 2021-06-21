@@ -32,6 +32,7 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
   private isShown: boolean;
   private isHiding: boolean;
   private hideTimer: any;
+  private currentParams: ShowNotificationParams | null = null;
   private showParams: ShowParams | null;
   private callStack: Array<ShowNotificationParams>;
   private hiddenComponentValue: number;
@@ -51,6 +52,7 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     this.isHiding = false;
     this.hideTimer = null;
     this.showParams = null;
+    this.currentParams = null;
     this.callStack = [];
     this.hiddenComponentValue = -DEFAULT_COMPONENT_HEIGHT;
 
@@ -124,6 +126,11 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     this.onStartHiding();
   }
 
+  private showCurrentLater() {
+    if (!this.isShown || this.isHiding || this.currentParams === null) return;
+    this.callStack.unshift(this.currentParams);
+  }
+
   public showNotification<ComponentType extends React.ElementType = typeof NotificationComponent>(
     functionParams: ShowNotificationParams<ComponentType>
   ) {
@@ -144,6 +151,12 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
           break;
         }
         case 'immediate': {
+          this.callStack.unshift(params);
+          this.hideNotification();
+          break;
+        }
+        case 'immediateMove': {
+          this.showCurrentLater();
           this.callStack.unshift(params);
           this.hideNotification();
           break;
@@ -177,6 +190,7 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     });
 
     this.showParams = restParams;
+    this.currentParams = params;
     this.isShown = true;
 
     this.setHideTimer();
@@ -220,6 +234,7 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     this.isShown = false;
     this.isHiding = false;
     this.showParams = null;
+    this.currentParams = null;
     this.translateY.setValue(MIN_TRANSLATE_Y);
 
     const nextNotification = this.callStack.shift();
