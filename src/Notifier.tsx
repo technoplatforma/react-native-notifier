@@ -1,10 +1,6 @@
 import React from 'react';
 import { Animated, LayoutChangeEvent, TouchableWithoutFeedback } from 'react-native';
-import {
-  PanGestureHandler,
-  PanGestureHandlerStateChangeEvent,
-  State,
-} from 'react-native-gesture-handler';
+import { PanGestureHandler, PanGestureHandlerStateChangeEvent, State } from 'react-native-gesture-handler';
 
 import s from './Notifier.styles';
 import { Notification as NotificationComponent } from './components';
@@ -18,7 +14,7 @@ import {
   SWIPE_ANIMATION_DURATION,
   SWIPE_PIXELS_TO_CLOSE,
 } from './constants';
-import { NotifierInterface, ShowNotificationParams, ShowParams, StateInterface } from './types';
+import type { NotifierInterface, ShowNotificationParams, ShowParams, StateInterface } from './types';
 
 export const Notifier: NotifierInterface = {
   showNotification: () => {},

@@ -1,6 +1,6 @@
-import NotificationComponent from './components/Notification';
-import { Animated } from 'react-native';
-import { ElementType } from 'react';
+import type { Animated } from 'react-native';
+import type { ElementType } from 'react';
+import type NotificationComponent from './components/Notification';
 
 export interface ShowParams {
   /** How fast notification will appear/disappear
@@ -68,8 +68,9 @@ export type QueueMode =
   | 'standby'
   | 'reset';
 
-export interface ShowNotificationParams<ComponentType extends ElementType = ElementType>
-  extends ShowParams {
+export interface ShowNotificationParams<
+  ComponentType extends ElementType = ElementType
+> extends ShowParams {
   /** Id of notification. To have control of the toasts.
    * @default undefined */
   id?: string;
@@ -104,7 +105,10 @@ export interface ShowNotificationParams<ComponentType extends ElementType = Elem
 
   /** Additional props that are passed to `Component`. See all available props of built-in components in the [components section](https://github.com/seniv/react-native-notifier#components)
    * @default {} */
-  componentProps?: Omit<React.ComponentProps<ComponentType>, 'title' | 'description'>;
+  componentProps?: Omit<
+    React.ComponentProps<ComponentType>,
+    'title' | 'description'
+  >;
 
   /** Determines the order in which notifications are shown. Read more in the [Queue Mode](https://github.com/seniv/react-native-notifier#queue-mode) section.
    * @default 'reset' */
@@ -121,7 +125,9 @@ export interface StateInterface {
 }
 
 export interface NotifierInterface {
-  showNotification<ComponentType extends ElementType = typeof NotificationComponent>(
+  showNotification<
+    ComponentType extends ElementType = typeof NotificationComponent
+  >(
     params: ShowNotificationParams<ComponentType>
   ): void;
   hideNotification(onHidden?: Animated.EndCallback): void;
