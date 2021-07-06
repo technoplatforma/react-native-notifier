@@ -2,22 +2,29 @@
   "name": "react-native-notifier",
   "version": "1.6.108",
   "description": "Fast and simple in-app notifications for React Native",
-  "main": "lib/commonjs/index.js",
-  "module": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
+  "main": "src/index.tsx",
+  "module": "src/index",
   "react-native": "src/index.tsx",
   "files": [
     "src",
-    "lib"
+    "lib",
+    "android",
+    "ios",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!node_modules",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
   ],
   "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
-    "lint": "eslint --ext .js,.ts,.tsx .",
-    "prepare": "bob build",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example/ios && node -e \"process.exit(require('os').platform() === 'darwin')\" || pod install",
+    "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "keywords": [
@@ -25,13 +32,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/seniv/react-native-notifier",
-  "author": "Ivan Seniv <seniv97@gmail.com> (https://github.com/seniv)",
+  "repository": "https://github.com/lexgorbunov/react-native-notifier",
+  "author": "Alexander Gorbunov <lexgorbunov@gmail.com> (https://github.com/lexgorbunov)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/seniv/react-native-notifier/issues"
+    "url": "https://github.com/lexgorbunov/react-native-notifier/issues"
   },
-  "homepage": "https://github.com/seniv/react-native-notifier#readme",
+  "homepage": "https://github.com/lexgorbunov/react-native-notifier#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
     "@react-native-community/bob": "^0.10.0",
@@ -58,25 +65,8 @@
     "react-native": "*",
     "react-native-gesture-handler": "*"
   },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint && yarn typescript"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "eslintConfig": {
+    "root": true,
     "extends": [
       "@react-native-community",
       "prettier"
@@ -85,6 +75,7 @@
       "prettier/prettier": [
         "error",
         {
+          "quoteProps": "consistent",
           "singleQuote": true,
           "tabWidth": 2,
           "trailingComma": "es5",
@@ -98,36 +89,10 @@
     "lib/"
   ],
   "prettier": {
+    "quoteProps": "consistent",
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "es5",
-    "useTabs": false,
-    "printWidth": 100
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
-  },
-  "@react-native-community/bob": {
-    "source": "src",
-    "output": "lib",
-    "targets": [
-      "commonjs",
-      "module",
-      "typescript"
-    ]
+    "useTabs": false
   }
 }
