@@ -151,6 +151,13 @@ export class NotifierRoot extends React.PureComponent<ShowNotificationParams, St
     )
       return;
 
+    if (
+      params.skipAlreadyInQueue &&
+      params.id &&
+      !!this.callStack.find(item => item.id === params.id)
+    )
+      return;
+
     if (this.isShown) {
       switch (params.queueMode) {
         case 'standby': {

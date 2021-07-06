@@ -78,6 +78,10 @@ export interface ShowNotificationParams<ComponentType extends ElementType = Elem
    * @default false */
   skipAlreadyShown?: boolean;
 
+  /** It won't hide current toast if a toast with same id is already in queue
+   * @default false */
+  skipAlreadyInQueue?: boolean;
+
   /** If true, next toast with a queueMode 'immediateMoveOnlyStrong' will show it toast later (if it shown)
    * @default false */
   strong?: boolean;
