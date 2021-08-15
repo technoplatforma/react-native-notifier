@@ -4,5 +4,5 @@ export { NotifierComponents };
 export { Notifier, NotifierRoot } from './Notifier';
 export { Easing } from 'react-native';
 export * from './NotifierWrapper';
-export { NotifierInterface, QueueMode } from './types';
-export { AlertComponentProps } from './components/Alert';
+export type { NotifierInterface, QueueMode } from './types';
+export type { AlertComponentProps } from './components/Alert';
